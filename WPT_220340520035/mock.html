@@ -1,0 +1,51 @@
+<html>
+<body>
+<form>
+  <div>
+  
+    <label for="bookid"><b>Book Id</b></label>
+    <input type="text" placeholder="Enter book id" name="bookid" id="bookid" required><span id="msg"></span>
+  </br>
+    <label for="bookname"><b>Book Name</b></label>
+    <input type="text" placeholder="Enter book name" name="bookname" id="bookname" required>
+  </br>
+    <label for="price"><b>Price</b></label>
+    <input type="text" placeholder="Enter price" name="price" id="price" required>
+</br> 
+    <button id="add">Add Book</button>
+  </div>
+</body>
+
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+
+$("#add").click(function(){
+  console.log("event")
+  let ip={ bookid: $("#bookid").val(),
+      bookname:$("#bookname").val(),
+      price:$("#price").val()
+    };
+  let parameterstothefunction=
+    { data:ip, 
+      url: "http://localhost:8081/addBook",
+      type:'post',
+      dataType: "json",
+      success:(datagivenbyserver)=>{ 
+        console.log( "data given by server in success" + datagivenbyserver)
+        if(datagivenbyserver.status==true)
+        {
+          $("#msg").text("book added"); 
+        }
+        else
+        {
+        $("#msg").text("book not added");
+        }
+      },
+      error:(errorgivenbyserver)=> { console.log("failed to contact server "+errorgivenbyserver)}
+    }  ;
+    $.ajax(parameterstothefunction);
+})
+</script>
+
+
+</html>
